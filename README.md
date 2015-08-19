@@ -1,6 +1,9 @@
 # TinyRTCModulePython
 Python Codes for Access to the DS1307 and AT24C32 I2C ICs which are on the "Tiny RTC Module"
 
+Preperations fpr the Pi to activate I2C-Bus:
+Simply start 'raspi-config' (as root) go to "Advanced Options" and enable the automatic load of the I2C-Interface.
+
 Preparations for the module to work with a Raspberry Pi (Pullup Resistors R2 + R3 need to be removed to not fry your Pi) and a CR2032-Battery (loading circuit needs to be removed (CR2032 is not rechargable) and Voltage Divider for powering the DS1307 BAT-Pin need to be removed).
 Fix is from this page: http://www.sunspot.co.uk/Projects/Arduino/speaking-vario/tinyRTCfix.html
 
