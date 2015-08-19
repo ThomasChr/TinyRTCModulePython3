@@ -211,76 +211,80 @@ def ds1307_set_ram(addr, val):
 	addr = addr + 0x08
 	i2c.write_byte_data(ds1307addr, addr, val)	
 	
-# open I2C Bus 1
-i2c = smbus.SMBus(1)
+# Only run when you are the main program. Not when you're importes as a module:
+if __name__ == '__main__':
+	# open I2C Bus 1
+	i2c = smbus.SMBus(1)
 
-# Set RTC Control
-# -> Set Clock to running
-# -> Set 24-hour-mode
-# -> Output (when SquareWave disabled) 0
-# -> Square Wave enabled
-# -> Frequency 1 Hertz
-ds1307_set_control(0, 0, 0, 1, 1)
+	# Set RTC Control
+	# -> Set Clock to running
+	# -> Set 24-hour-mode
+	# -> Output (when SquareWave disabled) 0
+	# -> Square Wave enabled
+	# -> Frequency 1 Hertz
+	ds1307_set_control(0, 0, 0, 1, 1)
 
-# Set RTC Time
-now = datetime.datetime.now()
+	# Set RTC Time
+	now = datetime.datetime.now()
 
-ds1307_set_seconds(int(now.second))
-ds1307_set_minutes(int(now.minute))
-ds1307_set_hours(int(now.hour))
-ds1307_set_day(int(now.strftime("%w")))
-ds1307_set_date(int(now.day))
-ds1307_set_month(int(now.month))
-ds1307_set_year(int(now.year))
+	ds1307_set_seconds(int(now.second))
+	ds1307_set_minutes(int(now.minute))
+	ds1307_set_hours(int(now.hour))
+	ds1307_set_day(int(now.strftime("%w")))
+	ds1307_set_date(int(now.day))
+	ds1307_set_month(int(now.month))
+	ds1307_set_year(int(now.year))
 
-# read RTC
-seconds = ds1307_get_seconds()
-minutes = ds1307_get_minutes()
-hours = ds1307_get_hours()
-day = ds1307_get_day()
-date = ds1307_get_date()
-month = ds1307_get_month()
-year = ds1307_get_year()
-clockstopped, mode12hour, output, squarewavean, freq = ds1307_get_control()
+	# read RTC
+	seconds = ds1307_get_seconds()
+	minutes = ds1307_get_minutes()
+	hours = ds1307_get_hours()
+	day = ds1307_get_day()
+	date = ds1307_get_date()
+	month = ds1307_get_month()
+	year = ds1307_get_year()
+	clockstopped, mode12hour, output, squarewavean, freq = ds1307_get_control()
 
-# Print time
-print("Time is: " + str("{0:02}".format(date)) + "." + str("{0:02}".format(month)) + "." + str("{0:04}".format(year)) + " " + str("{0:02}".format(hours)) + ":" + str("{0:02}".format(minutes)) + ":" + str("{0:02}".format(seconds)))
-print("Day of week: " + str(day))
-print("Clock stopped: " + str(clockstopped))
-print("12-hour-mode: " + str(mode12hour))
-print("Output when SquareWave disabled: " + str(output))
-print("Square-Wave Enabled: " + str(squarewavean))
-print("Frequency of Output: " + str(freq) + " Hz")
+	# Print time
+	print("Time is: " + str("{0:02}".format(date)) + "." + str("{0:02}".format(month)) + "." + str("{0:04}".format(year)) + " " + str("{0:02}".format(hours)) + ":" + str("{0:02}".format(minutes)) + ":" + str("{0:02}".format(seconds)))
+	print("Day of week: " + str(day))
+	print("Clock stopped: " + str(clockstopped))
+	print("12-hour-mode: " + str(mode12hour))
+	print("Output when SquareWave disabled: " + str(output))
+	print("Square-Wave Enabled: " + str(squarewavean))
+	print("Frequency of Output: " + str(freq) + " Hz")
 
-# Set Data in RAM
-rannum = int(random.random()*100)
-print("Setting RAM to 'Hello World X' where X is a random number.")
-print("Random Number is: " + str(rannum))
-ds1307_set_ram(0, ord('H'))
-ds1307_set_ram(1, ord('e'))
-ds1307_set_ram(2, ord('l'))
-ds1307_set_ram(3, ord('l'))
-ds1307_set_ram(4, ord('o'))
-ds1307_set_ram(5, ord(' '))
-ds1307_set_ram(6, ord('W'))
-ds1307_set_ram(7, ord('o'))
-ds1307_set_ram(8, ord('r'))
-ds1307_set_ram(9, ord('l'))
-ds1307_set_ram(10, ord('d'))
-ds1307_set_ram(11, ord(' '))
-ds1307_set_ram(12, rannum)
+	# Set Data in RAM
+	rannum = int(random.random()*100)
+	print("Setting RAM to 'Hello World X' where X is a random number.")
+	print("Random Number is: " + str(rannum))
+	ds1307_set_ram(0, ord('H'))
+	ds1307_set_ram(1, ord('e'))
+	ds1307_set_ram(2, ord('l'))
+	ds1307_set_ram(3, ord('l'))
+	ds1307_set_ram(4, ord('o'))
+	ds1307_set_ram(5, ord(' '))
+	ds1307_set_ram(6, ord('W'))
+	ds1307_set_ram(7, ord('o'))
+	ds1307_set_ram(8, ord('r'))
+	ds1307_set_ram(9, ord('l'))
+	ds1307_set_ram(10, ord('d'))
+	ds1307_set_ram(11, ord(' '))
+	ds1307_set_ram(12, rannum)
 
-# Get Data from RAM
-data = []
-print("Reading RAM:")
-for i in range(13):
-	data.append(ds1307_get_ram(i))
+	# Get Data from RAM
+	data = []
+	print("Reading RAM:")
+	for i in range(13):
+		data.append(ds1307_get_ram(i))
 
-# Print data as String
-for i in range(12):
-	print(str(chr(data[i])), end='')
-print(str(data[12]))
+	# Print data as String
+	for i in range(12):
+		print(str(chr(data[i])), end='')
+	print(str(data[12]))
 
-# close I2C Bus
-del i2c
-
+	# close I2C Bus
+	del i2c
+else:
+	# We're a module, just open the Bus, and leave it open
+	i2c = smbus.SMBus(1)	

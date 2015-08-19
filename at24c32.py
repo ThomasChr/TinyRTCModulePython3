@@ -24,39 +24,43 @@ def at24c32_set_ram(addr, val):
 	lowerbyte = addr & 0b0000000011111111
 	i2c.write_i2c_block_data(at24c32addr, upperbyte, [lowerbyte, val])	
 	time.sleep(0.1)
-	
-# open I2C Bus 1
-i2c = smbus.SMBus(1)
 
-# Set Data in EEPROM
-rannum = int(random.random()*100)
-print("Setting EEPROM to 'Hello World X' where X is a random number.")
-print("Random Number is: " + str(rannum))
-at24c32_set_ram(0, ord('H'))
-at24c32_set_ram(1, ord('e'))
-at24c32_set_ram(2, ord('l'))
-at24c32_set_ram(3, ord('l'))
-at24c32_set_ram(4, ord('o'))
-at24c32_set_ram(5, ord(' '))
-at24c32_set_ram(6, ord('W'))
-at24c32_set_ram(7, ord('o'))
-at24c32_set_ram(8, ord('r'))
-at24c32_set_ram(9, ord('l'))
-at24c32_set_ram(10, ord('d'))
-at24c32_set_ram(11, ord(' '))
-at24c32_set_ram(12, rannum)
+# Only run when you are the main program. Not when you're importes as a module:
+if __name__ == '__main__':	
+	# open I2C Bus 1
+	i2c = smbus.SMBus(1)
 
-# Get Data from EEPROM
-data = []
-print("Reading EEPROM:")
-for i in range(13):
-	data.append(at24c32_get_ram(i))
+	# Set Data in EEPROM
+	rannum = int(random.random()*100)
+	print("Setting EEPROM to 'Hello World X' where X is a random number.")
+	print("Random Number is: " + str(rannum))
+	at24c32_set_ram(0, ord('H'))
+	at24c32_set_ram(1, ord('e'))
+	at24c32_set_ram(2, ord('l'))
+	at24c32_set_ram(3, ord('l'))
+	at24c32_set_ram(4, ord('o'))
+	at24c32_set_ram(5, ord(' '))
+	at24c32_set_ram(6, ord('W'))
+	at24c32_set_ram(7, ord('o'))
+	at24c32_set_ram(8, ord('r'))
+	at24c32_set_ram(9, ord('l'))
+	at24c32_set_ram(10, ord('d'))
+	at24c32_set_ram(11, ord(' '))
+	at24c32_set_ram(12, rannum)
 
-# Print data as String
-for i in range(12):
-	print(str(chr(data[i])), end='')
-print(str(data[12]))
-	
-# close I2C Bus
-del i2c
+	# Get Data from EEPROM
+	data = []
+	print("Reading EEPROM:")
+	for i in range(13):
+		data.append(at24c32_get_ram(i))
 
+	# Print data as String
+	for i in range(12):
+		print(str(chr(data[i])), end='')
+	print(str(data[12]))
+		
+	# close I2C Bus
+	del i2c	
+else:
+	# We're a module, just open the Bus, and leave it open
+	i2c = smbus.SMBus(1)
