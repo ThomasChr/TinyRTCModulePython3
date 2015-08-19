@@ -11,6 +11,8 @@ Fix is from this page: http://www.sunspot.co.uk/Projects/Arduino/speaking-vario/
 2. Remove R4 R5 R6 and D1
 3. Short the now free Pads from R6
 
+Steps 2 + 3 are only needed if you intend to use a CR2032 Battery, if the included LR2032 works fine for you, you don't need to do these steps.
+
 These Python Codes need the SMBUS Library (for Python3) installed.
 How to from here: http://www.linuxcircle.com/2015/05/03/how-to-install-smbus-i2c-module-for-python-3/
 
