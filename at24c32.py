@@ -25,10 +25,10 @@ def at24c32_set_ram(addr, val):
 	i2c.write_i2c_block_data(at24c32addr, upperbyte, [lowerbyte, val])	
 	time.sleep(0.1)
 
-# Only run when you are the main program. Not when you're imported as a module:
-if __name__ == '__main__':	
-	# open I2C Bus 1
-	i2c = smbus.SMBus(1)
+def main():
+	if "i2c" not in vars():
+		# open I2C Bus 1
+		i2c = smbus.SMBus(1)
 
 	# Set Data in EEPROM
 	rannum = int(random.random()*100)
@@ -58,9 +58,11 @@ if __name__ == '__main__':
 	for i in range(12):
 		print(str(chr(data[i])), end='')
 	print(str(data[12]))
-		
-	# close I2C Bus
-	del i2c	
-else:
-	# We're a module, just open the Bus, and leave it open
-	i2c = smbus.SMBus(1)
+	
+# open I2C Bus 1 -> Everytime
+i2c = smbus.SMBus(1)
+	
+# Only run when you are the main program. Not when you're importes as a module:
+if __name__ == '__main__':
+	main()
+
