@@ -27,4 +27,23 @@ How to from here: http://www.linuxcircle.com/2015/05/03/how-to-install-smbus-i2c
 - python3 setup.py install
 - exit
 
+Connect the Module to your Pi:
+- Module VCC goes to 5V on the Pi (Pin2)
+- Module GND goes to GND on the Pi (Pin6)
+- Module SDA goes to SDA1 on the Pi (Pin3)
+- Module SCL goes to SCL1 on the Pi (Pin5)
+
+You can test if you find the DS1307 IC (I2C Address 0x68) and the Atmel EEPROM (I2C Address 0x50) by:
+"apt-get install i2c-tools" (as root) and "i2cdetect -y 1". Expected output:
+
+     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+00:          -- -- -- -- -- -- -- -- -- -- -- -- --
+10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+50: 50 -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+60: -- -- -- -- -- -- -- -- 68 -- -- -- -- -- -- --
+70: -- -- -- -- -- -- -- --
+
 These Python Codes are all completly OpenSource and come with no varranty. Use as you wish, but at your own risk.
