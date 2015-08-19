@@ -211,7 +211,7 @@ def ds1307_set_ram(addr, val):
 	addr = addr + 0x08
 	i2c.write_byte_data(ds1307addr, addr, val)	
 	
-# Only run when you are the main program. Not when you're importes as a module:
+# Only run when you are the main program. Not when you're imported as a module:
 if __name__ == '__main__':
 	# open I2C Bus 1
 	i2c = smbus.SMBus(1)
